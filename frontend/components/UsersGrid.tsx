@@ -1,4 +1,4 @@
-import UserCard from '../components/UserCard'
+import UserCard from './UserCard'
 
 export default function UsersGrid() {
     return (
