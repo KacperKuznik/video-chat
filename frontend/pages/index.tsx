@@ -5,6 +5,7 @@ import conference from '../public/conference.png'
 import CreateRoomButton from '../components/CreateRoomButton'
 
 export default function Home() {
+
   return (
     <>
       <Head>
