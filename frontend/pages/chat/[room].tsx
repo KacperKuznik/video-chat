@@ -20,7 +20,7 @@ export default function Room() {
       let id
       call.on('stream', function(remoteStream) {
         if (id !== remoteStream.id){
-          id = remoteStream.id
+        id = remoteStream.id
         addVideo(userId, remoteStream)
         } 
       });
@@ -53,7 +53,7 @@ export default function Room() {
             let id
             call.on('stream', function(remoteStream) {
               if (id !== remoteStream.id){
-                id = remoteStream.id
+              id = remoteStream.id
               addVideo(call.peer, remoteStream)
               } 
             });
