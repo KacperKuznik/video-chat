@@ -4,10 +4,11 @@ import MyUserVideo from '../../components/MyUserVideo';
 import { useRouter } from 'next/router'
 import io from 'socket.io-client';
 import {useEffect, useRef, useState} from 'react'
+import { useSelector } from 'react-redux';
 
 export default function Room() {
   const router = useRouter()
-
+  const muted = useSelector(state => state.muted.value)
   type VideoStream = {
     userId: string,
     video: MediaStream
@@ -66,6 +67,12 @@ export default function Room() {
     }
   }, [router])
 
+  useEffect(() => {
+    if (myStream){
+      myStream.getAudioTracks()[0].enabled = !muted
+    }
+  }, [muted])
+  
   
   return (
     <>
