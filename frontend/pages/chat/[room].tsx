@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 export default function Room() {
   const router = useRouter()
   const muted = useSelector(state => state.muted.value)
+  const showCamera = useSelector(state => state.showCamera.value)
+
   type VideoStream = {
     userId: string,
     video: MediaStream
@@ -72,7 +74,13 @@ export default function Room() {
       myStream.getAudioTracks()[0].enabled = !muted
     }
   }, [muted])
-  
+
+  useEffect(() => {
+    if (myStream){
+      myStream.getVideoTracks()[0].enabled = showCamera
+      console.log(myStream.getVideoTracks()[0])
+    }
+  }, [showCamera])
   
   return (
     <>
