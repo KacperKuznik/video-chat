@@ -21,10 +21,13 @@ export default function Room() {
       call.on('stream', function(remoteStream) {
         if (id !== remoteStream.id){
           id = remoteStream.id
-        let video = {userId: userId, stream: remoteStream}
-        setVideos(videos => [...videos, video])
+        addVideo(userId, remoteStream)
         } 
       });
+    }
+    function addVideo(userId, remoteStream){
+      let video = {userId: userId, stream: remoteStream}
+      setVideos(videos => [...videos, video])
     }
 
   useEffect(() => {
@@ -47,6 +50,13 @@ export default function Room() {
           })
           peer.on('call', function(call) {
             call.answer(stream);
+            let id
+            call.on('stream', function(remoteStream) {
+              if (id !== remoteStream.id){
+                id = remoteStream.id
+              addVideo(call.peer, remoteStream)
+              } 
+            });
           })
           socket.on('disconnect-user', (userId) => {
             setVideos(videos => videos.filter(video => video.userId != userId))
