@@ -25,8 +25,14 @@ io.on('connection', socket => {
     console.log("user: " + userId + " joined room: " + roomId)
     socket.join(roomId)
     socket.broadcast.to(roomId).emit('user-connected', userId)
+    socket.on("disconnect", ()=>{
+      socket.broadcast.emit("disconnect-user", userId)
+      console.log("disconnected user:", userId, "from room:", roomId)
+    })
   })
 })
+
+
 
 server.listen(port, () => {
     console.log(`Server is listening on port: ${port}`)

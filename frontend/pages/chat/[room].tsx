@@ -4,13 +4,12 @@ import MyUserVideo from '../../components/MyUserVideo';
 import { useRouter } from 'next/router'
 import io from 'socket.io-client';
 import {useEffect, useRef, useState} from 'react'
-import UserVideo from '../../components/UserVideo';
 
 export default function Room() {
   const router = useRouter()
 
   type VideoStream = {
-    userID: string,
+    userId: string,
     video: MediaStream
   }
   const [videos, setVideos] = useState<VideoStream[]>([])
@@ -26,9 +25,6 @@ export default function Room() {
         setVideos(videos => [...videos, video])
         } 
       });
-      call.on('close', () => {
-        //video.remove()
-      })
     }
 
   useEffect(() => {
@@ -52,11 +48,15 @@ export default function Room() {
           peer.on('call', function(call) {
             call.answer(stream);
           })
+          socket.on('disconnect-user', (userId) => {
+            setVideos(videos => videos.filter(video => video.userId != userId))
+          })
         })
       });
     }
   }, [router])
 
+  
   return (
     <>
       <UsersGrid videos={videos}/>
