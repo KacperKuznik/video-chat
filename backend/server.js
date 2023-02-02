@@ -29,7 +29,12 @@ io.on('connection', socket => {
       socket.broadcast.emit("disconnect-user", userId)
       console.log("disconnected user:", userId, "from room:", roomId)
     })
-  })
+    socket.on("message", (message) =>{
+      console.log("user:", userId, "sent message:", message)
+      socket.broadcast.emit("broadcast-message", message)
+    })
+  }
+  )
 })
 
 
