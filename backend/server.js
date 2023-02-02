@@ -31,7 +31,7 @@ io.on('connection', socket => {
     })
     socket.on("message", (message) =>{
       console.log("user:", userId, "sent message:", message)
-      socket.broadcast.emit("broadcast-message", message)
+      socket.broadcast.emit("broadcasted-message", message)
     })
   }
   )
